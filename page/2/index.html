@@ -100,7 +100,7 @@
 <meta name="keywords" content="springboot,springclound,nuxt,node,vuejs">
 <meta property="og:type" content="website">
 <meta property="og:title" content="山姆博客">
-<meta property="og:url" content="https://lenvonsam.github.io/tags/RESTful-Api/index.html">
+<meta property="og:url" content="https://lenvonsam.github.io/page/2/index.html">
 <meta property="og:site_name" content="山姆博客">
 <meta property="og:description" content="全栈攻城狮开发过程中的一些技术积累">
 <meta property="og:locale" content="zh-CN">
@@ -114,7 +114,7 @@
 
   
   
-  <link rel="canonical" href="https://lenvonsam.github.io/tags/RESTful-Api/">
+  <link rel="canonical" href="https://lenvonsam.github.io/page/2/">
 
 
 
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>标签: RESTful Api | 山姆博客</title>
+  <title>山姆博客</title>
   
 
 
@@ -172,7 +172,8 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -233,7 +234,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -295,25 +296,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -344,53 +326,201 @@
           
           <div id="content" class="content">
             
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
 
   
   
   
-  <div class="post-block tag">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>RESTful Api<small>标签</small>
-        </h1>
-      </div>
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2019/04/09/fe-rule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="samy">
+      <meta itemprop="description" content="全栈攻城狮开发过程中的一些技术积累">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="山姆博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/09/fe-rule/" class="post-title-link" itemprop="url">前端编码规范</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-09 13:45:37" itemprop="dateCreated datePublished" datetime="2019-04-09T13:45:37+08:00">2019-04-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-10 16:51:05" itemprop="dateModified" datetime="2019-04-10T16:51:05+08:00">2019-04-10</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/The-front-end/" itemprop="url" rel="index"><span itemprop="name">The front end</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
 
       
         
+          
+            <p>
+              基本准则符合web标准, 语义化html, 结构、样式、表现行为分离, 兼容性优良. 页面性能方面, 代码要求简洁明了有序, 尽可能的减小服务器负载, 保证最快的解析速度.
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+通用规范1.所有页面按照统一的格式来写；2.对所有后台请求的返回结果做判断空处理（保证在后台请求失败的情况下，浏览器控制台不会报错）；3.所有功能模块写注释，详见下面注释规范；4.处理逻辑一定要尽量简化，抽取公共框架，减少后期维护成本；5.tab键用两个空格代替或用两个空格缩进（务必）；6.代码行之间尽量不要有空行，重大逻辑转折、语法意义转折，方法分割除外，适当空行增强可读性；7.可使用 W3C HTML/CSS Validator 来验证你的 HTML/CSS 代码有效性;
 
-      <h2 class="post-title">
+文件、资源和目录命名约定（适用于所有前端维护的内容和相关目录，(html, css, js, png, gif, jpg, ico)等）1.字母一律小写，必须是英文单词或者汉语拼音，以英语单词优先，多个单词以连字符 - 连接。 只能出现小写引文字母，数字和连字符；2.浏览器广告拦截插件会将含有这些词的作为广告拦截： ad、ads、adv、banner、sponsor、gg、guangg、guanggao等，页面中尽量避免采用以上词汇来命名；3.文件命名总是以字母开头而不是数字，以特殊字符开头命名的文件，一般都有特殊的含义与用处，慎用。4.需要对文件增加前后缀或特定的扩展名（比如 .min.js, .min.css），抑或一串前缀（比如 asdasd.main.min.css）。这种情况下，建议使用点分隔符来
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/09/fe-rule/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
-          <a class="post-title-link" href="/2019/04/09/api-rule/" itemprop="url">
-            
-              <span itemprop="name">RESTful Api 规范</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-09T15:04:48+08:00" content="2019-04-09">
-          04-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
   
   
   
+  </article>
+
+
+    
+  </section>
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 
