@@ -284,7 +284,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">11</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">12</span></a>
 
   </li>
 
@@ -327,6 +327,223 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2019/10/12/springboot-gradle-deploy-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="samy">
+      <meta itemprop="description" content="全栈攻城狮开发过程中的一些技术积累">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="山姆博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/12/springboot-gradle-deploy-docker/" class="post-title-link" itemprop="url">Springboot【2.x】+ Gradle远程部署到Linux的Docker中</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-12 15:29:19 / 修改时间：17:17:43" itemprop="dateCreated datePublished" datetime="2019-10-12T15:29:19+08:00">2019-10-12</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/10/12/springboot-gradle-deploy-docker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/12/springboot-gradle-deploy-docker/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/10/12/springboot-gradle-deploy-docker/" class="leancloud_visitors" data-flag-title="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              序言缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。
+系统及软件环境
+Linux操作系统CentOS7(建议)
+Docker(社区版)—官方地址
+
+Docker RemoteApi远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置
+
+CentOS 6修改/etc/sysconfig/docker文件，重启后生效(service docker restart)
+DOCKER_OPTS="-H=unix:///var/run/docker.sock -H=0.0.0.0:2375"
+
+CentOS 7修改/usr/lib/systemd/system/docker.service文件，在ExecStart后面添加一行
+ExecStart=/usr/bin/dockerd  -H tcp://0.0.0.0:2375  -H unix:///var/run/docker.sock
+
+
+效果截图
+
+重启服务
+systemctl daemon-reload    systemctl restart docker.service
+
+测试效果浏览器访问(http://192.168.80.200:2375/info)
+
+
+项目创建与访问打开intelliJ -&gt; New Project -&gt; Spring Assistant(Spring Initializr Server) -&gt; 选择gradle -&gt; 工程名(gdhello) -
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/12/springboot-gradle-deploy-docker/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -2318,215 +2535,6 @@ SpringCloud版本本次所有测试项目中Springboot版本为2.1.4.RELEASE，S
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2019/04/09/api-rule/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="samy">
-      <meta itemprop="description" content="全栈攻城狮开发过程中的一些技术积累">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="山姆博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/09/api-rule/" class="post-title-link" itemprop="url">RESTful Api 规范</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-09 15:04:48 / 修改时间：15:49:34" itemprop="dateCreated datePublished" datetime="2019-04-09T15:04:48+08:00">2019-04-09</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/04/09/api-rule/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/09/api-rule/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/2019/04/09/api-rule/" class="leancloud_visitors" data-flag-title="RESTful Api 规范">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>
-              协议API与用户的通信协议,总是使用HTTPS协议,确保交互数据的传输安全。
-
-域名应该尽量将API部署在专用域名之下。https://api.example.com
-如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下。https://example.org/api/
-
-版本应该将API的版本号放入URL。https://api.example.com/v1/
-
-路径路径又称”终点”（endpoint），表示API的具体网址。
-在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的名词也应该使用复数。
-举例来说，有一个API提供图书馆（library）的信息，还包括各种书籍和工作人员的信息，则它的路径应该设计成下面这样
-·  https://api.example.com/v1/library·  https://api.example.com/v1/books·  https://api.example.com/v1/staffs
-
-HTTP请求方式对于资源的具体操作类型，由HTTP动词表示。
-常用的HTTP动词有下面四个（括号里是对应的SQL命令）。
-GET（SELECT）：从服务器取出资源（一项或多项）。POST（CREATE）：在服务器新建一个资源。PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。PATCH（UPDATE）：在服务器更新资源（客户
-              ...
-            </p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/09/api-rule/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2573,7 +2581,7 @@ GET（SELECT）：从服务器取出资源（一项或多项）。POST（CREATE�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

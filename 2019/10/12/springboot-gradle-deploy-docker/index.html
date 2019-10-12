@@ -96,18 +96,25 @@
 
 
 
-  <meta name="description" content="协议API与用户的通信协议,总是使用HTTPS协议,确保交互数据的传输安全。  域名应该尽量将API部署在专用域名之下。1https://api.example.com 如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下。1https://example.org/api/  版本应该将API的版本号放入URL。1https://api.example.com/v1/  路径路径又称”终点">
-<meta name="keywords" content="RESTful Api">
+  <meta name="description" content="序言缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。 系统及软件环境 Linux操作系统CentOS7(建议) Docker(社区版)—官方地址  Docker RemoteApi远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置  CentOS 6修改/etc/sysconfig/dock">
+<meta name="keywords" content="Springboot,Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RESTful Api 规范">
-<meta property="og:url" content="https://lenvonsam.github.io/2019/04/09/api-rule/index.html">
+<meta property="og:title" content="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
+<meta property="og:url" content="https://lenvonsam.github.io/2019/10/12/springboot-gradle-deploy-docker/index.html">
 <meta property="og:site_name" content="山姆博客">
-<meta property="og:description" content="协议API与用户的通信协议,总是使用HTTPS协议,确保交互数据的传输安全。  域名应该尽量将API部署在专用域名之下。1https://api.example.com 如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下。1https://example.org/api/  版本应该将API的版本号放入URL。1https://api.example.com/v1/  路径路径又称”终点">
+<meta property="og:description" content="序言缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。 系统及软件环境 Linux操作系统CentOS7(建议) Docker(社区版)—官方地址  Docker RemoteApi远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置  CentOS 6修改/etc/sysconfig/dock">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-09T07:49:34.625Z">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/sp_docker_01.jpg">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/sp_docker_02.jpeg">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/gd_project.jpeg">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/jt_07.jpeg">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/jt_08.jpeg">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/jt_09.jpeg">
+<meta property="og:updated_time" content="2019-10-12T09:17:43.308Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RESTful Api 规范">
-<meta name="twitter:description" content="协议API与用户的通信协议,总是使用HTTPS协议,确保交互数据的传输安全。  域名应该尽量将API部署在专用域名之下。1https://api.example.com 如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下。1https://example.org/api/  版本应该将API的版本号放入URL。1https://api.example.com/v1/  路径路径又称”终点">
+<meta name="twitter:title" content="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
+<meta name="twitter:description" content="序言缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。 系统及软件环境 Linux操作系统CentOS7(建议) Docker(社区版)—官方地址  Docker RemoteApi远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置  CentOS 6修改/etc/sysconfig/dock">
+<meta name="twitter:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/sp_docker_01.jpg">
 
 
 
@@ -115,7 +122,7 @@
 
   
   
-  <link rel="canonical" href="https://lenvonsam.github.io/2019/04/09/api-rule/">
+  <link rel="canonical" href="https://lenvonsam.github.io/2019/10/12/springboot-gradle-deploy-docker/">
 
 
 
@@ -125,7 +132,7 @@
   };
 </script>
 
-  <title>RESTful Api 规范 | 山姆博客</title>
+  <title>Springboot【2.x】+ Gradle远程部署到Linux的Docker中 | 山姆博客</title>
   
 
 
@@ -343,7 +350,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2019/04/09/api-rule/">
+    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2019/10/12/springboot-gradle-deploy-docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="samy">
@@ -360,7 +367,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">RESTful Api 规范
+          <h2 class="post-title" itemprop="name headline">Springboot【2.x】+ Gradle远程部署到Linux的Docker中
 
               
             
@@ -386,7 +393,7 @@
                 
               
 
-              <time title="创建时间：2019-04-09 15:04:48 / 修改时间：15:49:34" itemprop="dateCreated datePublished" datetime="2019-04-09T15:04:48+08:00">2019-04-09</time>
+              <time title="创建时间：2019-10-12 15:29:19 / 修改时间：17:17:43" itemprop="dateCreated datePublished" datetime="2019-10-12T15:29:19+08:00">2019-10-12</time>
             
 
             
@@ -427,8 +434,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/04/09/api-rule/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/09/api-rule/" itemprop="commentCount"></span>
+                <a href="/2019/10/12/springboot-gradle-deploy-docker/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/12/springboot-gradle-deploy-docker/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -436,7 +443,7 @@
 
           
           
-            <span id="/2019/04/09/api-rule/" class="leancloud_visitors" data-flag-title="RESTful Api 规范">
+            <span id="/2019/10/12/springboot-gradle-deploy-docker/" class="leancloud_visitors" data-flag-title="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -467,39 +474,52 @@
       
 
       
-        <h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><p>API与用户的通信协议,总是使用<a href="https://baike.baidu.com/item/https/285356" target="_blank" rel="noopener">HTTPS协议</a>,确保交互数据的传输安全。</p>
-<hr>
-<h1 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h1><p>应该尽量将API部署在专用域名之下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.example.com</span><br></pre></td></tr></table></figure></p>
-<p>如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://example.org/api/</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p>应该将API的版本号放入URL。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.example.com/v1/</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h1><p>路径又称”终点”（endpoint），表示API的具体网址。</p>
-<p>在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的名词也应该使用复数。</p>
-<p>举例来说，有一个API提供图书馆（library）的信息，还包括各种书籍和工作人员的信息，则它的路径应该设计成下面这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">·  https://api.example.com/v1/library</span><br><span class="line">·  https://api.example.com/v1/books</span><br><span class="line">·  https://api.example.com/v1/staffs</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="HTTP请求方式"><a href="#HTTP请求方式" class="headerlink" title="HTTP请求方式"></a>HTTP请求方式</h1><p>对于资源的具体操作类型，由HTTP动词表示。</p>
-<p>常用的HTTP动词有下面四个（括号里是对应的SQL命令）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET（SELECT）：从服务器取出资源（一项或多项）。</span><br><span class="line"></span><br><span class="line">POST（CREATE）：在服务器新建一个资源。</span><br><span class="line"></span><br><span class="line">PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</span><br><span class="line"></span><br><span class="line">PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</span><br><span class="line"></span><br><span class="line">DELETE（DELETE）：从服务器删除资源。</span><br></pre></td></tr></table></figure>
-<p>还有两个不常用的HTTP动词。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HEAD：获取资源的元数据。</span><br><span class="line"></span><br><span class="line">OPTIONS：获取信息，关于资源的哪些属性是客户端可以改变的。</span><br></pre></td></tr></table></figure></p>
-<p>下面是一些例子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">GET /product：列出所有商品</span><br><span class="line"></span><br><span class="line">POST /product：新建一个商品</span><br><span class="line"></span><br><span class="line">GET /product/ID：获取某个指定商品的信息</span><br><span class="line"></span><br><span class="line">PUT /product/ID：更新某个指定商品的信息</span><br><span class="line"></span><br><span class="line">DELETE /product/ID：删除某个商品</span><br><span class="line"></span><br><span class="line">GET /product/ID/purchase ：列出某个指定商品的所有投资者</span><br><span class="line"></span><br><span class="line">get /product/ID/purchase/ID：获取某个指定商品的指定投资者信息</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="过滤信息"><a href="#过滤信息" class="headerlink" title="过滤信息"></a>过滤信息</h1><p>如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。</p>
-<p>下面是一些常见的参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">?limit=10：指定返回记录的数量</span><br><span class="line"></span><br><span class="line">?offset=10：指定返回记录的开始位置。</span><br><span class="line"></span><br><span class="line">?page=2&amp;per_page=100：指定第几页，以及每页的记录数。</span><br><span class="line"></span><br><span class="line">?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。</span><br><span class="line"></span><br><span class="line">?producy_type=1：指定筛选条件</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h1><p>服务器向用户返回的状态码和提示信息，常见的有以下一些（方括号中是该状态码对应的HTTP动词）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">·  200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。</span><br><span class="line">·  201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</span><br><span class="line">·  202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</span><br><span class="line">·  204 NO CONTENT - [DELETE]：用户删除数据成功。</span><br><span class="line">·  400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</span><br><span class="line">·  401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</span><br><span class="line">·  403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</span><br><span class="line">·  404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</span><br><span class="line">·  406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</span><br><span class="line">·  410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</span><br><span class="line">·  422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</span><br><span class="line">·  500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。</span><br></pre></td></tr></table></figure></p>
-<p>状态码的完全列表<a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank" rel="noopener">参见这里</a></p>
-<hr>
-<h1 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h1><p>如果状态码是4xx，就应该向用户返回出错信息。一般来说，返回的信息中将error作为键名，出错信息作为键值即可。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    error: "Invalid Request"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="返回结果"><a href="#返回结果" class="headerlink" title="返回结果"></a>返回结果</h1><p>针对不同操作，服务器向用户返回的结果应该符合以下规范。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">·   GET /collection：返回资源对象的列表（数组）</span><br><span class="line">·   GET /collection/resource：返回单个资源对象</span><br><span class="line">·   POST /collection：返回新生成的资源对象</span><br><span class="line">·   PUT /collection/resource：返回完整的资源对象</span><br><span class="line">·   PATCH /collection/resource：返回完整的资源对象</span><br><span class="line">·   DELETE /collection/resource：返回一个空文档</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ul>
-<li><strong>服务器返回的数据格式，应该尽量使用JSON，避免使用XML。</strong></li>
-<li>行业公认比较好的RESTFUL设计思想为<a href="https://www.ibm.com/developerworks/cn/java/j-lo-SpringHATEOAS/" target="_blank" rel="noopener">HATEOAS</a></li>
+        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。</p>
+<h1 id="系统及软件环境"><a href="#系统及软件环境" class="headerlink" title="系统及软件环境"></a>系统及软件环境</h1><ul>
+<li>Linux操作系统CentOS7(建议)</li>
+<li>Docker(社区版)—<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">官方地址</a></li>
 </ul>
+<h1 id="Docker-RemoteApi"><a href="#Docker-RemoteApi" class="headerlink" title="Docker RemoteApi"></a>Docker RemoteApi</h1><p>远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置</p>
+<ul>
+<li><p>CentOS 6<br>修改/etc/sysconfig/docker文件，重启后生效<span style="color: red;font-weight: bold">(service docker restart)</span></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_OPTS=<span class="string">"-H=unix:///var/run/docker.sock -H=0.0.0.0:2375"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CentOS 7<br>修改/usr/lib/systemd/system/docker.service文件，在ExecStart后面添加一行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/dockerd  -H tcp://0.0.0.0:2375  -H unix:///var/run/docker.sock</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><span style="margin-left: 40px">效果截图</span></p>
+<p><img src="/files/imgs/spbootdocker/sp_docker_01.jpg" alt="dockerConfig"></p>
+<p><span style="margin-left: 40px">重启服务</span></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload    </span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试效果<br>浏览器访问(<a href="http://192.168.80.200:2375/info" target="_blank" rel="noopener">http://192.168.80.200:2375/info</a>)</li>
+</ul>
+<p><img src="/files/imgs/spbootdocker/sp_docker_02.jpeg" alt="dockerInfo"></p>
+<h1 id="项目创建与访问"><a href="#项目创建与访问" class="headerlink" title="项目创建与访问"></a>项目创建与访问</h1><p>打开intelliJ -&gt; New Project -&gt; Spring Assistant(Spring Initializr Server) -&gt; 选择gradle -&gt; 工程名(gdhello) -&gt; 点击完成，项目结构如下</p>
+<p><img src="/files/imgs/spbootdocker/gd_project.jpeg" alt="gradleProject"></p>
+<p>在src/main/kotlin 相应目录下新建HelloController<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping(<span class="meta-string">"hello"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">helloWorld</span><span class="params">()</span></span> = <span class="string">"hello world"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在src/main/resource的application.properties里面添加自定义端口号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.port=8889</span><br></pre></td></tr></table></figure>
+<p>启动项目，浏览器访问<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ ./gradlew bootRun</span><br></pre></td></tr></table></figure></p>
+<p><img src="/files/imgs/spbootdocker/jt_07.jpeg" alt="bootBrower"></p>
+<h1 id="配置DockerFile"><a href="#配置DockerFile" class="headerlink" title="配置DockerFile"></a>配置DockerFile</h1><p>确保项目能正常访问后，在src/main/docker文件夹下面，新建dockerfile<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> gdhello-0.0.1.jar app.jar</span></span><br><span class="line"><span class="comment"># -Djava.security.egd=file:/dev/./urandom 可解决tomcat可能启动慢的问题</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"java"</span>,<span class="string">"-Djava.security.egd=file:/dev/./urandom"</span>,<span class="string">"-jar"</span>,<span class="string">"/app.jar"</span>]</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8889</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="配置Gradle中docker依赖"><a href="#配置Gradle中docker依赖" class="headerlink" title="配置Gradle中docker依赖"></a>配置Gradle中docker依赖</h1><p>用intellij自动生成的gradle项目已经是5.6.x版本并且将原来的build.gradle替换成了build.gradle.kts(DSL脚本语言，如果不熟悉的童鞋，在文章末尾文献参考中有官方的学习资料，山姆本人对于DSL的认识也仅限于文档的部分内容)，打开build.gradle.kts添加docker-remote-api插件<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id(<span class="string">"com.bmuschko.docker-remote-api"</span>) version <span class="string">"5.2.0"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">docker &#123;</span><br><span class="line">    <span class="comment">// 远程docker服务器地址(如果不设置，默认本地2375端口)</span></span><br><span class="line">    url.set(<span class="string">"tcp://192.168.80.200:2375"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>到此，docker-remote-api最简单的配置已经完毕，但还不能像maven一样直接远程部署，还需要进行task任务的项目打包和docker远程部署<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val copyJarToDocker by tasks.creating(<span class="keyword">Copy</span>::<span class="keyword">class</span>) &#123;</span><br><span class="line">    dependsOn(tasks.bootJar)</span><br><span class="line">    <span class="keyword">from</span>(<span class="string">"build/libs"</span>)</span><br><span class="line">    <span class="keyword">into</span>(<span class="string">"src/main/docker"</span>)</span><br><span class="line">    <span class="keyword">include</span>(<span class="string">"driver-bk.jar"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">val buildMyAppImage by tasks.creating(DockerBuildImage::<span class="keyword">class</span>) &#123;</span><br><span class="line">    dependsOn(copyJarToDocker)</span><br><span class="line">    inputDir.set(<span class="keyword">file</span>(<span class="string">"src/main/docker"</span>))</span><br><span class="line">    tags.add(<span class="string">"driverkb-test:0.0.1"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>保存后，执行以下命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ ./gradlew buildGradleDockerImage</span><br></pre></td></tr></table></figure>
+<p><img src="/files/imgs/spbootdocker/jt_08.jpeg" alt="dockerSuccess"></p>
+<p>看到执行成功后，远程登录80.200的服务，看下docker镜像</p>
+<p><img src="/files/imgs/spbootdocker/jt_09.jpeg" alt="dockerImages"></p>
+<blockquote>
+<p>小思考</p>
+</blockquote>
+<ul>
+<li>学有余力的童鞋，可以思考下为了保证生产环境的安全性，如何创建docker的授权登录机制？</li>
+<li>如何利用gradle-docker-plugin这个插件，通过gradle task来自动创建docker容器，并在创建后自动运行容器，结束后自动销毁容器，并能监听容器日志？</li>
+</ul>
+<p><strong>欢迎有兴趣的童鞋跟山姆留言，大家一起讨论，一起学习，一起进步^_^</strong></p>
+<h1 id="文献参考"><a href="#文献参考" class="headerlink" title="文献参考"></a>文献参考</h1><p>【demo地址】<a href="https://github.com/lenvonsam/gdhello.git" target="_blank" rel="noopener">(https://github.com/lenvonsam/mvhello.git)</a><br>【docker官网】<a href="https://docs.docker.com" target="_blank" rel="noopener">(https://docs.docker.com)</a><br>【docker介绍】<a href="https://www.cnblogs.com/boshen-hzb/p/6400272.html" target="_blank" rel="noopener">(https://www.cnblogs.com/boshen-hzb/p/6400272.html)</a><br>【kotlin介绍】<a href="https://www.runoob.com/kotlin/kotlin-tutorial.html" target="_blank" rel="noopener">(https://www.runoob.com/kotlin/kotlin-tutorial.html)</a><br>【gradle(DSL)】<a href="https://docs.gradle.org/current/dsl/" target="_blank" rel="noopener">(https://docs.gradle.org/current/dsl/)</a><br>【gradle-docker-plugin文档】<a href="https://bmuschko.github.io/gradle-docker-plugin/" target="_blank" rel="noopener">(https://bmuschko.github.io/gradle-docker-plugin/)</a></p>
 
       
     </div>
@@ -523,7 +543,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/RESTful-Api/" rel="tag"># RESTful Api</a>
+            <a href="/tags/Springboot/" rel="tag"># Springboot</a>
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
           
         </div>
       
@@ -536,8 +558,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/09/fe-rule/" rel="next" title="前端编码规范">
-                <i class="fa fa-chevron-left"></i> 前端编码规范
+              <a href="/2019/10/11/springboot-maven-deploy-docker/" rel="next" title="Springboot【2.x】+ Maven远程部署到Linux的Docker中">
+                <i class="fa fa-chevron-left"></i> Springboot【2.x】+ Maven远程部署到Linux的Docker中
               </a>
             
           </div>
@@ -545,10 +567,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/09/java-rule/" rel="prev" title="Java开发编码规范(摘记)">
-                Java开发编码规范(摘记) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -743,7 +761,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#协议"><span class="nav-number">1.</span> <span class="nav-text">协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#域名"><span class="nav-number">2.</span> <span class="nav-text">域名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#版本"><span class="nav-number">3.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路径"><span class="nav-number">4.</span> <span class="nav-text">路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP请求方式"><span class="nav-number">5.</span> <span class="nav-text">HTTP请求方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过滤信息"><span class="nav-number">6.</span> <span class="nav-text">过滤信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态码"><span class="nav-number">7.</span> <span class="nav-text">状态码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#错误处理"><span class="nav-number">8.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#返回结果"><span class="nav-number">9.</span> <span class="nav-text">返回结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意事项"><span class="nav-number">10.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统及软件环境"><span class="nav-number">2.</span> <span class="nav-text">系统及软件环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-RemoteApi"><span class="nav-number">3.</span> <span class="nav-text">Docker RemoteApi</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目创建与访问"><span class="nav-number">4.</span> <span class="nav-text">项目创建与访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置DockerFile"><span class="nav-number">5.</span> <span class="nav-text">配置DockerFile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Gradle中docker依赖"><span class="nav-number">6.</span> <span class="nav-text">配置Gradle中docker依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文献参考"><span class="nav-number">7.</span> <span class="nav-text">文献参考</span></a></li></ol></div>
             
 
           </div>
