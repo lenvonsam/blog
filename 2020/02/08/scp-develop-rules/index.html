@@ -107,25 +107,18 @@
 
 
 
-  <meta name="description" content="序言缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。 系统及软件环境 Linux操作系统CentOS7(建议) Docker(社区版)—官方地址  Docker RemoteApi远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置  CentOS 6修改/etc/sysconfig/dock">
-<meta name="keywords" content="Springboot,Docker">
+  <meta name="description" content="工程项目结构 供应链工程后端项目基于 springcloud 微服务架构搭建，依托于 SVN 进行代码管理，下面就整个工程项目模块做个解释说明。  SVN 访问地址：https://192.168.20.30/!/#xy-scp(内网) 12345678910111213# 会及时更新|--- scp-account-server #账户微服务模块|--- scp-bank-adaptor-ser">
+<meta name="keywords" content="智恒达内部文档(加密)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
-<meta property="og:url" content="https://lenvonsam.github.io/2019/10/12/springboot-gradle-deploy-docker/index.html">
+<meta property="og:title" content="型云供应链工程后端项目开发文档">
+<meta property="og:url" content="https://lenvonsam.github.io/2020/02/08/scp-develop-rules/index.html">
 <meta property="og:site_name" content="山姆博客">
-<meta property="og:description" content="序言缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。 系统及软件环境 Linux操作系统CentOS7(建议) Docker(社区版)—官方地址  Docker RemoteApi远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置  CentOS 6修改/etc/sysconfig/dock">
+<meta property="og:description" content="工程项目结构 供应链工程后端项目基于 springcloud 微服务架构搭建，依托于 SVN 进行代码管理，下面就整个工程项目模块做个解释说明。  SVN 访问地址：https://192.168.20.30/!/#xy-scp(内网) 12345678910111213# 会及时更新|--- scp-account-server #账户微服务模块|--- scp-bank-adaptor-ser">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/sp_docker_01.jpg">
-<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/sp_docker_02.jpeg">
-<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/gd_project.jpeg">
-<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/jt_07.jpeg">
-<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/jt_08.jpeg">
-<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/jt_09.jpeg">
-<meta property="og:updated_time" content="2019-10-12T09:20:32.334Z">
+<meta property="og:updated_time" content="2020-02-08T04:02:39.703Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
-<meta name="twitter:description" content="序言缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。 系统及软件环境 Linux操作系统CentOS7(建议) Docker(社区版)—官方地址  Docker RemoteApi远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置  CentOS 6修改/etc/sysconfig/dock">
-<meta name="twitter:image" content="https://lenvonsam.github.io/files/imgs/spbootdocker/sp_docker_01.jpg">
+<meta name="twitter:title" content="型云供应链工程后端项目开发文档">
+<meta name="twitter:description" content="工程项目结构 供应链工程后端项目基于 springcloud 微服务架构搭建，依托于 SVN 进行代码管理，下面就整个工程项目模块做个解释说明。  SVN 访问地址：https://192.168.20.30/!/#xy-scp(内网) 12345678910111213# 会及时更新|--- scp-account-server #账户微服务模块|--- scp-bank-adaptor-ser">
 
 
 
@@ -133,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="https://lenvonsam.github.io/2019/10/12/springboot-gradle-deploy-docker/">
+  <link rel="canonical" href="https://lenvonsam.github.io/2020/02/08/scp-develop-rules/">
 
 
 
@@ -143,7 +136,7 @@
   };
 </script>
 
-  <title>Springboot【2.x】+ Gradle远程部署到Linux的Docker中 | 山姆博客</title>
+  <title>型云供应链工程后端项目开发文档 | 山姆博客</title>
   
 
 
@@ -361,7 +354,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2019/10/12/springboot-gradle-deploy-docker/">
+    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2020/02/08/scp-develop-rules/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="samy">
@@ -378,7 +371,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Springboot【2.x】+ Gradle远程部署到Linux的Docker中
+          <h2 class="post-title" itemprop="name headline">型云供应链工程后端项目开发文档
 
               
             
@@ -404,7 +397,7 @@
                 
               
 
-              <time title="创建时间：2019-10-12 15:29:19 / 修改时间：17:20:32" itemprop="dateCreated datePublished" datetime="2019-10-12T15:29:19+08:00">2019-10-12</time>
+              <time title="创建时间：2020-02-08 11:51:59 / 修改时间：12:02:39" itemprop="dateCreated datePublished" datetime="2020-02-08T11:51:59+08:00">2020-02-08</time>
             
 
             
@@ -426,7 +419,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ZHD/" itemprop="url" rel="index"><span itemprop="name">ZHD</span></a></span>
 
                 
                 
@@ -445,8 +438,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/10/12/springboot-gradle-deploy-docker/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/10/12/springboot-gradle-deploy-docker/" itemprop="commentCount"></span>
+                <a href="/2020/02/08/scp-develop-rules/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/08/scp-develop-rules/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -454,7 +447,7 @@
 
           
           
-            <span id="/2019/10/12/springboot-gradle-deploy-docker/" class="leancloud_visitors" data-flag-title="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
+            <span id="/2020/02/08/scp-develop-rules/" class="leancloud_visitors" data-flag-title="型云供应链工程后端项目开发文档">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -485,52 +478,36 @@
       
 
       
-        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>缘由已在上章节讲述，本章就直接进入主题–基于springboot+Gradle项目远程部署到docker，希望能给大伙儿有些帮助。</p>
-<h1 id="系统及软件环境"><a href="#系统及软件环境" class="headerlink" title="系统及软件环境"></a>系统及软件环境</h1><ul>
-<li>Linux操作系统CentOS7(建议)</li>
-<li>Docker(社区版)—<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">官方地址</a></li>
+        <h1 id="工程项目结构"><a href="#工程项目结构" class="headerlink" title="工程项目结构"></a>工程项目结构</h1><ul>
+<li>供应链工程后端项目基于 springcloud 微服务架构搭建，依托于 SVN 进行代码管理，下面就整个工程项目模块做个解释说明。</li>
 </ul>
-<h1 id="Docker-RemoteApi"><a href="#Docker-RemoteApi" class="headerlink" title="Docker RemoteApi"></a>Docker RemoteApi</h1><p>远程部署前提需要开启docker远程访问功能，下面介绍常用两个操作系统的配置</p>
+<p>SVN 访问地址：<a href="https://192.168.20.30/!/#xy-scp(内网)" target="_blank" rel="noopener">https://192.168.20.30/!/#xy-scp(内网)</a></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 会及时更新</span></span><br><span class="line"></span><br><span class="line">|--- scp-account-server #账户微服务模块</span><br><span class="line">|--- scp-bank-adaptor-server #银行前置微服务模块</span><br><span class="line">|--- scp-basic-server #基础数据微服务模块</span><br><span class="line">|--- scp-eureka-server #微服务发现与注册模块</span><br><span class="line">|--- scp-gateway-server #路由负载与分发微服务模块</span><br><span class="line">|--- scp-purchase-server #采购微服务模块</span><br><span class="line">|--- scp-wechat-server #微信功能微服务模块</span><br><span class="line">|--- scp-bus-server #微服务总线模块</span><br><span class="line">|--- scp-config-server #微服务配置中心</span><br><span class="line">|--- scp-config-repo #微服务 SVN 文件配置源</span><br><span class="line">|--- scp-data-api #微服务核心模块 jar(包含接口定义、公用工具类、所有模块 DTO，DPI，Hystrix 等)</span><br></pre></td></tr></table></figure>
+<p>日志收集访问地址：<a href="http://192.168.80.210:5601（测试）" target="_blank" rel="noopener">http://192.168.80.210:5601（测试）</a></p>
 <ul>
-<li><p>CentOS 6<br>修改/etc/sysconfig/docker文件，重启后生效<span style="color: red;font-weight: bold">(service docker restart)</span></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_OPTS=<span class="string">"-H=unix:///var/run/docker.sock -H=0.0.0.0:2375"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>CentOS 7<br>修改/usr/lib/systemd/system/docker.service文件，在ExecStart后面添加一行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/dockerd  -H tcp://0.0.0.0:2375  -H unix:///var/run/docker.sock</span><br></pre></td></tr></table></figure>
-</li>
+<li>单个微服务模块标准化项目结构说明(拿采购模块模块做示例说明)，单个项目技术架构 springboot+mybatis+springcloud+oracle</li>
 </ul>
-<p><span style="margin-left: 40px">效果截图</span></p>
-<p><img src="/files/imgs/spbootdocker/sp_docker_01.jpg" alt="dockerConfig"></p>
-<p><span style="margin-left: 40px">重启服务</span></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload    </span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试效果<br>浏览器访问(<a href="http://192.168.80.200:2375/info" target="_blank" rel="noopener">http://192.168.80.200:2375/info</a>)</li>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">scp-purchse-server</span><br><span class="line">|---src</span><br><span class="line">|--main</span><br><span class="line">|--docker/ # 用于 docker 远程部署(本地开发不用关心！！！)</span><br><span class="line">|--dockerfile</span><br><span class="line">|--java/</span><br><span class="line">|--org.zhd.purchase</span><br><span class="line">|--controller/ #控制层</span><br><span class="line">|--entity/ #实体类层</span><br><span class="line">|--mapper/ #ORM 层</span><br><span class="line">|--service/ #业务控制层</span><br><span class="line">|--util/ # 工具类</span><br><span class="line">|--GeneratorFile.java #自动生成 entity、service、controller、mapper(一般不做改变)</span><br><span class="line">|--MyBatisPlusConfig.java #mybatis plus 配置类(一般不做改变！！！)</span><br><span class="line">|--ScpPurchaseServerApplication.java #启动类(一般不做改变!!!)</span><br><span class="line">|--ServletInitializer.java #项目自动生成类，用于打成 war 使用(一般不做改变!!!)</span><br><span class="line">|--resources</span><br><span class="line">|--mapper/ #ORM 对应的 xml</span><br><span class="line">|--static/ #静态资源</span><br><span class="line">|--templates/ #模板</span><br><span class="line">|--application.yml #配置文件</span><br><span class="line">|--bootstrap.yml #config server 配置文件</span><br><span class="line">|--logback-spring.xml #日志处理文件(一般不做改变！！！)</span><br><span class="line">|--sequence.sql #orcale 各个表单生成 sequence sql 文件</span><br><span class="line">|--test/ #测试层</span><br><span class="line">|---pom.xml #jar 包依赖，打包，部署配置(除了下载 jar 包外一般不做改变！！！)</span><br></pre></td></tr></table></figure>
+<h1 id="开发环境准备"><a href="#开发环境准备" class="headerlink" title="开发环境准备"></a>开发环境准备</h1><ul>
+<li>有较强的英文阅读能力！！！</li>
+<li>有一定自我解决问题的能力！！！</li>
+<li>jdk8 [官方下载] <a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a> ，并配置到环境变量中(自行搜索教程)</li>
+<li>maven3.3 [官方下载] <a href="http://maven.apache.org/download.cgi，并配置到环境变量中(自行搜索教程)" target="_blank" rel="noopener">http://maven.apache.org/download.cgi，并配置到环境变量中(自行搜索教程)</a></li>
+<li>intellij ce [官方下载] <a href="https://www.jetbrains.com/idea/" target="_blank" rel="noopener">https://www.jetbrains.com/idea/</a> (下载 community 版就足够了)，并配置 svn(自行搜索教程)</li>
+<li>java 开发规范 [在线文档] <a href="https://blog.thinkingsam.cn/2019/04/09/java-rule/" target="_blank" rel="noopener">https://blog.thinkingsam.cn/2019/04/09/java-rule/</a></li>
+<li>springcloud 简单教程 [在线文档] <a href="https://blog.thinkingsam.cn/tags/SpringCloud/" target="_blank" rel="noopener">https://blog.thinkingsam.cn/tags/SpringCloud/</a></li>
+<li>mysqlplus 简单教程 [在线文档] <a href="https://mp.baomidou.com/" target="_blank" rel="noopener">https://mp.baomidou.com/</a></li>
+<li>springboot 简单教程 [在线文档] <a href="https://docs.spring.io/spring-boot/docs/2.1.11.RELEASE/reference/htmlsingle/" target="_blank" rel="noopener">https://docs.spring.io/spring-boot/docs/2.1.11.RELEASE/reference/htmlsingle/</a></li>
+<li>api restful 规范 [在线文档] <a href="https://blog.thinkingsam.cn/2019/04/09/api-rule/" target="_blank" rel="noopener">https://blog.thinkingsam.cn/2019/04/09/api-rule/</a></li>
 </ul>
-<p><img src="/files/imgs/spbootdocker/sp_docker_02.jpeg" alt="dockerInfo"></p>
-<h1 id="项目创建与访问"><a href="#项目创建与访问" class="headerlink" title="项目创建与访问"></a>项目创建与访问</h1><p>打开intelliJ -&gt; New Project -&gt; Spring Assistant(Spring Initializr Server) -&gt; 选择gradle -&gt; 工程名(gdhello) -&gt; 点击完成，项目结构如下</p>
-<p><img src="/files/imgs/spbootdocker/gd_project.jpeg" alt="gradleProject"></p>
-<p>在src/main/kotlin 相应目录下新建HelloController<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping(<span class="meta-string">"hello"</span>)</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">helloWorld</span><span class="params">()</span></span> = <span class="string">"hello world"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在src/main/resource的application.properties里面添加自定义端口号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server.port=8889</span><br></pre></td></tr></table></figure>
-<p>启动项目，浏览器访问<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ ./gradlew bootRun</span><br></pre></td></tr></table></figure></p>
-<p><img src="/files/imgs/spbootdocker/jt_07.jpeg" alt="bootBrower"></p>
-<h1 id="配置DockerFile"><a href="#配置DockerFile" class="headerlink" title="配置DockerFile"></a>配置DockerFile</h1><p>确保项目能正常访问后，在src/main/docker文件夹下面，新建dockerfile<br><figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jdk-alpine</span><br><span class="line"><span class="keyword">VOLUME</span><span class="bash"> /tmp</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> gdhello-0.0.1.jar app.jar</span></span><br><span class="line"><span class="comment"># -Djava.security.egd=file:/dev/./urandom 可解决tomcat可能启动慢的问题</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="bash"> [<span class="string">"java"</span>,<span class="string">"-Djava.security.egd=file:/dev/./urandom"</span>,<span class="string">"-jar"</span>,<span class="string">"/app.jar"</span>]</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8889</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="配置Gradle中docker依赖"><a href="#配置Gradle中docker依赖" class="headerlink" title="配置Gradle中docker依赖"></a>配置Gradle中docker依赖</h1><p>用intellij自动生成的gradle项目已经是5.6.x版本并且将原来的build.gradle替换成了build.gradle.kts(DSL脚本语言，如果不熟悉的童鞋，在文章末尾文献参考中有官方的学习资料，山姆本人对于DSL的认识也仅限于文档的部分内容)，打开build.gradle.kts添加docker-remote-api插件<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line">    id(<span class="string">"com.bmuschko.docker-remote-api"</span>) version <span class="string">"5.2.0"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">docker &#123;</span><br><span class="line">    <span class="comment">// 远程docker服务器地址(如果不设置，默认本地2375端口)</span></span><br><span class="line">    url.set(<span class="string">"tcp://192.168.80.200:2375"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>到此，docker-remote-api最简单的配置已经完毕，但还不能像maven一样直接远程部署，还需要进行task任务的项目打包和docker远程部署<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">val copyJarToDocker by tasks.creating(<span class="keyword">Copy</span>::<span class="keyword">class</span>) &#123;</span><br><span class="line">	dependsOn(tasks.bootJar)</span><br><span class="line">	<span class="keyword">from</span>(<span class="string">"build/libs"</span>)</span><br><span class="line">	<span class="keyword">into</span>(<span class="string">"src/main/docker"</span>)</span><br><span class="line">	<span class="keyword">include</span>(<span class="string">"$&#123;project.name&#125;-$&#123;project.version&#125;.jar"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">val buildGradleDockerImage by tasks.creating(DockerBuildImage::<span class="keyword">class</span>) &#123;</span><br><span class="line">	dependsOn(copyJarToDocker)</span><br><span class="line">	inputDir.set(<span class="keyword">file</span>(<span class="string">"src/main/docker"</span>))</span><br><span class="line">	tags.add(<span class="string">"$&#123;project.name&#125;:0.0.1"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>保存后，执行以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ ./gradlew buildGradleDockerImage</span><br></pre></td></tr></table></figure>
-<p><img src="/files/imgs/spbootdocker/jt_08.jpeg" alt="dockerSuccess"></p>
-<p>看到执行成功后，远程登录80.200的服务，看下docker镜像</p>
-<p><img src="/files/imgs/spbootdocker/jt_09.jpeg" alt="dockerImages"></p>
-<blockquote>
-<p>小思考</p>
-</blockquote>
-<ul>
-<li>学有余力的童鞋，可以思考下为了保证生产环境的安全性，如何创建docker的授权登录机制？</li>
-<li>如何利用gradle-docker-plugin这个插件，通过gradle task来自动创建docker容器，并在创建后自动运行容器，结束后自动销毁容器，并能监听容器日志？</li>
-</ul>
-<p><strong>欢迎有兴趣的童鞋跟山姆留言，大家一起讨论，一起学习，一起进步^_^</strong></p>
-<h1 id="文献参考"><a href="#文献参考" class="headerlink" title="文献参考"></a>文献参考</h1><p>【demo地址】<a href="https://github.com/lenvonsam/gdhello.git" target="_blank" rel="noopener">(https://github.com/lenvonsam/mvhello.git)</a><br>【docker官网】<a href="https://docs.docker.com" target="_blank" rel="noopener">(https://docs.docker.com)</a><br>【docker介绍】<a href="https://www.cnblogs.com/boshen-hzb/p/6400272.html" target="_blank" rel="noopener">(https://www.cnblogs.com/boshen-hzb/p/6400272.html)</a><br>【kotlin介绍】<a href="https://www.runoob.com/kotlin/kotlin-tutorial.html" target="_blank" rel="noopener">(https://www.runoob.com/kotlin/kotlin-tutorial.html)</a><br>【gradle(DSL)】<a href="https://docs.gradle.org/current/dsl/" target="_blank" rel="noopener">(https://docs.gradle.org/current/dsl/)</a><br>【gradle-docker-plugin文档】<a href="https://bmuschko.github.io/gradle-docker-plugin/" target="_blank" rel="noopener">(https://bmuschko.github.io/gradle-docker-plugin/)</a></p>
+<h1 id="开发规范与要求说明"><a href="#开发规范与要求说明" class="headerlink" title="开发规范与要求说明"></a>开发规范与要求说明</h1><p>1、 所有开发人员必须使用<strong>Intellij IDE</strong>进行本地开发，并要求安装<strong>Alibaba Java Coding Guidelines</strong>插件(自行搜索教程)</p>
+<p>2、所有文件的命名规范请参照 java 开发规范，所有文件命名风格请参照示例工程文件命名风格</p>
+<p>3、所有工程目录结构说明中<strong>标注不做更改的，请不要随意做修改！！！</strong></p>
+<p>4、<strong>开发人员注意</strong>单个实体类(比如 user 类)都可以使用 GeneratorFile 文件自动生成 entity/mapper/service/controller<strong>无需自己手动创建</strong>，希望开发人员更多关注业务模块的开发</p>
+<p>5、<strong>所有 Controller 进行数据流通信的是时候涉及到类对象都是核心文件库里面定义的 Dto 类对象，切勿将 entity 里面数据库对象对外暴露！！！</strong></p>
+<p>6、在第一次接触新项目微服务模块时，最好与开发过的小伙伴进行沟通交流，尤其是规范的注意事项</p>
+<p>7、多人协作开发时，开发人员在开发业务模块前，若之前有不同的开发人员进行开发，需与其进行沟通交流，确保二次开发原有功能模块都能正常运行</p>
+<p>8、<strong>每个开发人员在开发完功能任务模块，需自测(自测不仅仅是正常流程，异常流程尤其重要)确保其功能模块正常运行才能提交给测试人员进行测试</strong></p>
 
       
     </div>
@@ -554,9 +531,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Springboot/" rel="tag"># Springboot</a>
-          
-            <a href="/tags/Docker/" rel="tag"># Docker</a>
+            <a href="/tags/SCP/" rel="tag"># SCP</a>
           
         </div>
       
@@ -569,8 +544,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/11/springboot-maven-deploy-docker/" rel="next" title="Springboot【2.x】+ Maven远程部署到Linux的Docker中">
-                <i class="fa fa-chevron-left"></i> Springboot【2.x】+ Maven远程部署到Linux的Docker中
+              <a href="/2019/10/12/springboot-gradle-deploy-docker/" rel="next" title="Springboot【2.x】+ Gradle远程部署到Linux的Docker中">
+                <i class="fa fa-chevron-left"></i> Springboot【2.x】+ Gradle远程部署到Linux的Docker中
               </a>
             
           </div>
@@ -578,10 +553,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/02/08/scp-develop-rules/" rel="prev" title="型云供应链工程后端项目开发文档">
-                型云供应链工程后端项目开发文档 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -780,7 +751,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统及软件环境"><span class="nav-number">2.</span> <span class="nav-text">系统及软件环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-RemoteApi"><span class="nav-number">3.</span> <span class="nav-text">Docker RemoteApi</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目创建与访问"><span class="nav-number">4.</span> <span class="nav-text">项目创建与访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置DockerFile"><span class="nav-number">5.</span> <span class="nav-text">配置DockerFile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Gradle中docker依赖"><span class="nav-number">6.</span> <span class="nav-text">配置Gradle中docker依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文献参考"><span class="nav-number">7.</span> <span class="nav-text">文献参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工程项目结构"><span class="nav-number">1.</span> <span class="nav-text">工程项目结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开发环境准备"><span class="nav-number">2.</span> <span class="nav-text">开发环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开发规范与要求说明"><span class="nav-number">3.</span> <span class="nav-text">开发规范与要求说明</span></a></li></ol></div>
             
 
           </div>
