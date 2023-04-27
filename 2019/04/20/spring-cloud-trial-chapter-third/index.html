@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.ico?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="序言上一章节我们已经学习了最基本的Feign服务的提供者与消费者，本章主要想和大家分享下SpringCloud的Hystrix、Hystrix Dashboard、Turbine，为各个Feign client提供熔断、数据监控机制，使各个微服务更稳定、更高效运作和使用。 雪崩效应在微服务架构中通常会有多个服务层调用，基础服务的故障可能会导致级联故障，进而造成整个系统不可用的情况，这种现象被称为服">
+<meta name="keywords" content="SpringCloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud【Greenwich版本】第三章 熔断器(Hystrix)和熔断监控集群(Hystrix Dashboard&#x2F;Turbine)">
+<meta property="og:url" content="https://lenvonsam.github.io/2019/04/20/spring-cloud-trial-chapter-third/index.html">
+<meta property="og:site_name" content="山姆博客">
+<meta property="og:description" content="序言上一章节我们已经学习了最基本的Feign服务的提供者与消费者，本章主要想和大家分享下SpringCloud的Hystrix、Hystrix Dashboard、Turbine，为各个Feign client提供熔断、数据监控机制，使各个微服务更稳定、更高效运作和使用。 雪崩效应在微服务架构中通常会有多个服务层调用，基础服务的故障可能会导致级联故障，进而造成整个系统不可用的情况，这种现象被称为服">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/hystrix-normal.png">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/hystrix-show.png">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/hystrix-dashboard.png">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/dashboard.png">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/sc-turbine.png">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/sc-eureka-server.png">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/turbine.png">
+<meta property="og:updated_time" content="2019-04-30T13:46:23.296Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud【Greenwich版本】第三章 熔断器(Hystrix)和熔断监控集群(Hystrix Dashboard&#x2F;Turbine)">
+<meta name="twitter:description" content="序言上一章节我们已经学习了最基本的Feign服务的提供者与消费者，本章主要想和大家分享下SpringCloud的Hystrix、Hystrix Dashboard、Turbine，为各个Feign client提供熔断、数据监控机制，使各个微服务更稳定、更高效运作和使用。 雪崩效应在微服务架构中通常会有多个服务层调用，基础服务的故障可能会导致级联故障，进而造成整个系统不可用的情况，这种现象被称为服">
+<meta name="twitter:image" content="https://lenvonsam.github.io/files/imgs/spcloudtrial/chapterThird/hystrix-normal.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lenvonsam.github.io/2019/04/20/spring-cloud-trial-chapter-third/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SpringCloud【Greenwich版本】第三章 熔断器(Hystrix)和熔断监控集群(Hystrix Dashboard/Turbine) | 山姆博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">山姆博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">BLOG OF SAM GEEK</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">6</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">15</span></a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/lenvonsam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2019/04/20/spring-cloud-trial-chapter-third/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="samy">
+      <meta itemprop="description" content="全栈攻城狮开发过程中的一些技术积累">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="山姆博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">SpringCloud【Greenwich版本】第三章 熔断器(Hystrix)和熔断监控集群(Hystrix Dashboard/Turbine)
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-20 08:40:02" itemprop="dateCreated datePublished" datetime="2019-04-20T08:40:02+08:00">2019-04-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-30 21:46:23" itemprop="dateModified" datetime="2019-04-30T21:46:23+08:00">2019-04-30</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/04/20/spring-cloud-trial-chapter-third/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/20/spring-cloud-trial-chapter-third/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/04/20/spring-cloud-trial-chapter-third/" class="leancloud_visitors" data-flag-title="SpringCloud【Greenwich版本】第三章 熔断器(Hystrix)和熔断监控集群(Hystrix Dashboard/Turbine)">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h1><p>上一章节我们已经学习了最基本的Feign服务的提供者与消费者，本章主要想和大家分享下SpringCloud的Hystrix、Hystrix Dashboard、Turbine，为各个Feign client提供熔断、数据监控机制，使各个微服务更稳定、更高效运作和使用。</p>
+<h1 id="雪崩效应"><a href="#雪崩效应" class="headerlink" title="雪崩效应"></a>雪崩效应</h1><p>在微服务架构中通常会有多个服务层调用，基础服务的故障可能会导致级联故障，进而造成整个系统不可用的情况，这种现象被称为服务雪崩效应。服务雪崩效应是一种因“服务提供者”的不可用导致“服务消费者”的不可用,并将不可用逐渐放大的过程。</p>
+<h1 id="熔断器"><a href="#熔断器" class="headerlink" title="熔断器"></a>熔断器</h1><p>熔断器的原理很简单，如同电力过载保护器。它可以实现快速失败，如果它在一段时间内侦测到许多类似的错误，会强迫其以后的多个调用服务快速失败，不再访问远程服务器，从而防止应用程序不断地尝试执行可能会失败的操作，使得应用程序继续执行而不用等待修正错误，或者浪费CPU时间去等到长时间的超时产生。熔断器也可以使应用程序能够诊断错误是否已经修正，如果已经修正，应用程序会再次尝试调用操作。</p>
+<h1 id="Hystrix特性"><a href="#Hystrix特性" class="headerlink" title="Hystrix特性"></a>Hystrix特性</h1><h2 id="断路器机制"><a href="#断路器机制" class="headerlink" title="断路器机制"></a>断路器机制</h2><p>断路器很好理解, 当Hystrix Command请求后端服务失败数量超过一定比例(默认50%), 断路器会切换到开路状态(Open). 这时所有请求会直接失败而不会发送到后端服务. 断路器保持在开路状态一段时间后(默认5秒), 自动切换到半开路状态(HALF-OPEN). 这时会判断下一次请求的返回情况, 如果请求成功, 断路器切回闭路状态(CLOSED), 否则重新切换到开路状态(OPEN). Hystrix的断路器就像我们家庭电路中的保险丝, 一旦后端服务不可用, 断路器会直接切断请求链, 避免发送大量无效请求影响系统吞吐量, 并且断路器有自我检测并恢复的能力。</p>
+<h2 id="Fallback"><a href="#Fallback" class="headerlink" title="Fallback"></a>Fallback</h2><p>Fallback相当于是降级操作. 对于查询操作, 我们可以实现一个fallback方法, 当请求后端服务出现异常的时候, 可以使用fallback方法返回的值. fallback方法的返回值一般是设置的默认值或者来自缓存。</p>
+<h2 id="资源隔离"><a href="#资源隔离" class="headerlink" title="资源隔离"></a>资源隔离</h2><p>在Hystrix中, 主要通过线程池来实现资源隔离. 通常在使用的时候我们会根据调用的远程服务划分出多个线程池. 例如调用产品服务的Command放入A线程池, 调用账户服务的Command放入B线程池. 这样做的主要优点是运行环境被隔离开了. 这样就算调用服务的代码存在bug或者由于其他原因导致自己所在线程池被耗尽时, 不会对系统的其他服务造成影响. 但是带来的代价就是维护多个线程池会对系统带来额外的性能开销. 如果是对性能有严格要求而且确信自己调用服务的客户端代码不会出问题的话, 可以使用Hystrix的信号模式(Semaphores)来隔离资源.</p>
+<h1 id="添加Hystrix"><a href="#添加Hystrix" class="headerlink" title="添加Hystrix"></a>添加Hystrix</h1><h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><ul>
+<li>启动Eureka Server</li>
+<li>在data-spi接口jar中添加Hystrix Callback抽象类UserHytrix</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">UserHystrix</span> <span class="keyword">implements</span> <span class="title">UserProvider</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在UserProvider中声明callback</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(value = <span class="string">"data-user-provider"</span>, fallback = UserHystrix.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserProvider</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"user/&#123;id&#125;"</span>)</span><br><span class="line">    <span class="function">User <span class="title">userInfo</span><span class="params">(@PathVariable(value = <span class="string">"id"</span>, required = <span class="keyword">true</span>)</span> Long id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动Feign Provider</li>
+</ul>
+<h2 id="新增熔断机制"><a href="#新增熔断机制" class="headerlink" title="新增熔断机制"></a>新增熔断机制</h2><h3 id="添加pom依赖"><a href="#添加pom依赖" class="headerlink" title="添加pom依赖"></a>添加pom依赖</h3><p>找到Feign-consumer项目的pom.xml，添加如下代码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加注解"><a href="#添加注解" class="headerlink" title="添加注解"></a>添加注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableFeignClients</span>(basePackageClasses = &#123;UserProvider.class&#125;)</span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@EnableHystrix</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FeignConsumerApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(FeignConsumerApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="实现UserHytrix类"><a href="#实现UserHytrix类" class="headerlink" title="实现UserHytrix类"></a>实现UserHytrix类</h3><p>在项目中新建UserHystrixImpl实现类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserHystrixImpl</span> <span class="keyword">extends</span> <span class="title">UserHystrix</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">userInfo</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        User u = <span class="keyword">new</span> User();</span><br><span class="line">        u.setName(<span class="string">"user hytrix 服务中断了"</span>);</span><br><span class="line">        <span class="keyword">return</span> u;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="开启Hystrix开关"><a href="#开启Hystrix开关" class="headerlink" title="开启Hystrix开关"></a>开启Hystrix开关</h3><p>在application.properties中开启Hystrix开关</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">feign.hystrix.enabled=true</span><br></pre></td></tr></table></figure>
+<h2 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h2><ul>
+<li>启动服务，正常访问</li>
+</ul>
+<p><img src="/files/imgs/spcloudtrial/chapterThird/hystrix-normal.png" alt="hystrix normal"></p>
+<ul>
+<li>停掉Feign-provider服务，再次访问之前的链接</li>
+</ul>
+<p><img src="/files/imgs/spcloudtrial/chapterThird/hystrix-show.png" alt="hystrix show"></p>
+<p>如果能得到上述结果，恭喜你，已经成功配置Hystrix ^_^</p>
+<h1 id="添加Hystrix-Dashboard"><a href="#添加Hystrix-Dashboard" class="headerlink" title="添加Hystrix Dashboard"></a>添加Hystrix Dashboard</h1><p>虽然熔断机制很实用，但随着服务数量增多，我们很难监控要各个微服务的使用情况，为了减少人工维护的成本，Spring Cloud给大家提供了Hystrix监控机制 – Hystrix Dashboard。Hystrix Dashboard是作为断路器状态的一个组件，提供了数据监控和友好的图形化界面。</p>
+<h2 id="添加pom依赖-1"><a href="#添加pom依赖-1" class="headerlink" title="添加pom依赖"></a>添加pom依赖</h2><p>找到Feign-consumer项目，添加Hystrix Dashboard依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix-dashboard<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="添加注解-1"><a href="#添加注解-1" class="headerlink" title="添加注解"></a>添加注解</h2><p>在FeignConsumerApplication添加Hystrix Dashboard注解</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableFeignClients</span>(basePackageClasses = &#123;UserProvider.class&#125;)</span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@EnableHystrix</span></span><br><span class="line"><span class="meta">@EnableHystrixDashboard</span></span><br><span class="line"><span class="meta">@EnableCircuitBreaker</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FeignConsumerApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(FeignConsumerApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><p>浏览器输入<a href="http://localhost:8790/hystrix" target="_blank" rel="noopener">http://localhost:8790/hystrix</a></p>
+<p><img src="/files/imgs/spcloudtrial/chapterThird/hystrix-dashboard.png" alt="hystrix dashborad"></p>
+<p>图中会有一些提示</p>
+<blockquote>
+<blockquote>
+</blockquote>
+<p>Cluster via Turbine (default cluster): <a href="http://turbine-hostname:port/turbine.stream" target="_blank" rel="noopener">http://turbine-hostname:port/turbine.stream</a><br>Cluster via Turbine (custom cluster): <a href="http://turbine-hostname:port/turbine.stream?cluster=[clusterName]" target="_blank" rel="noopener">http://turbine-hostname:port/turbine.stream?cluster=[clusterName]</a><br>Single Hystrix App: <a href="http://hystrix-app:port/actuator/hystrix.stream" target="_blank" rel="noopener">http://hystrix-app:port/actuator/hystrix.stream</a></p>
+</blockquote>
+<p>前两个是集群监控（下面会讲解），我们先来看下针对单个Hystrix的监控，浏览器输入<a href="http://localhost:8790/actuator/hystrix.stream" target="_blank" rel="noopener">http://localhost:8790/actuator/hystrix.stream</a></p>
+<p>可能会出现的异常</p>
+<ul>
+<li><p>页面访问404<br>问题原因：springboot 针对actuator/hystrix.stream的URI有拦截，需要配置文件中手动开放设置<br>解决方案：在application.properties添加配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">management.endpoints.web.exposure.include=*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入页面有会一直显示<strong>Loading…</strong><br>问题原因：Dashboard是实时监控数据的，如果没有数据的时候就一直会显示Loading…<br>解决方案：请求服务&gt;&gt; <a href="http://localhost:8790/consumer/hello/1" target="_blank" rel="noopener">http://localhost:8790/consumer/hello/1</a></p>
+</li>
+</ul>
+<p>如果一切正常的话，就是下面的截图</p>
+<p><img src="/files/imgs/spcloudtrial/chapterThird/dashboard.png" alt="hystrix dashborad"></p>
+<p>针对图中的监控数据做个简要的说明（详细的可以从官网慢慢学习）</p>
+<ul>
+<li>实心圆：颜色代表健康度，（绿-黄-红-橙递减）；大小代表并发量。</li>
+<li>曲线：请求量的变化</li>
+<li>方法名（userInfo)下面第一行，绿色代表成功次数，百分比代表错误比例</li>
+<li>Cluster 代表请求频率</li>
+<li>Circuit 代表是否熔断</li>
+<li>Hosts、Median、Mean 代表处理速率，后面的时间代表延时时长</li>
+</ul>
+<h1 id="添加Hystrix-Turbine"><a href="#添加Hystrix-Turbine" class="headerlink" title="添加Hystrix Turbine"></a>添加Hystrix Turbine</h1><p>Hystrix Dashboard仅支持单个Hystrix.stream进行监控，跟与我们实际开发情况不相符合，若有多个Hystrix.stream就需要开多个窗口进行dashboard监控，如果这样的就非常繁琐，不过你不用担心，Spring Cloud给你提供了Turbine，它能提供把多个hystrix.stream的内容聚合为一个数据源供Dashboard展示。</p>
+<h2 id="前期准备-1"><a href="#前期准备-1" class="headerlink" title="前期准备"></a>前期准备</h2><p>复制Feign-consumer,服务名为Feign-consumer-jim, 端口号改为8791</p>
+<h2 id="新建Hystrix-Turbine-工程"><a href="#新建Hystrix-Turbine-工程" class="headerlink" title="新建Hystrix Turbine 工程"></a>新建Hystrix Turbine 工程</h2><p>在Intellij -&gt; new Project，选择Cloud Circuit Breaker -&gt; Hystrix Dashboard &amp; Turbine，最后点击完成</p>
+<p><img src="/files/imgs/spcloudtrial/chapterThird/sc-turbine.png" alt="turbine"></p>
+<h2 id="添加注解-2"><a href="#添加注解-2" class="headerlink" title="添加注解"></a>添加注解</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableHystrixDashboard</span></span><br><span class="line"><span class="meta">@EnableTurbine</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TurbineApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		SpringApplication.run(TurbineApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="添加配置"><a href="#添加配置" class="headerlink" title="添加配置"></a>添加配置</h2><p>在application.properties里面添加turbine相关配置（详情可查看官网）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=hystrix-dashboard-turbine</span><br><span class="line">server.port=9001</span><br><span class="line">turbine.appConfig=feign-consumer,feign-consumer-jim</span><br><span class="line">turbine.aggregator.clusterConfig=default</span><br><span class="line">turbine.clusterNameExpression=new String(&quot;default&quot;)</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka/</span><br></pre></td></tr></table></figure></p>
+<h2 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h2><ul>
+<li>打开eureka后台可以看到注册了四个服务</li>
+</ul>
+<p><img src="/files/imgs/spcloudtrial/chapterThird/sc-eureka-server.png" alt="eureka server"></p>
+<ul>
+<li><p>接着浏览输入 <a href="http://localhost:9001/hystrix" target="_blank" rel="noopener">http://localhost:9001/hystrix</a><br>输入集合stream URL -&gt; <a href="http://localhost:9001/turbine.stream" target="_blank" rel="noopener">http://localhost:9001/turbine.stream</a><br>最后点击 Monitor Stream ,进入监控列表</p>
+</li>
+<li><p>分别请求服务 <a href="http://localhost:8790/consumer/hello/1" target="_blank" rel="noopener">http://localhost:8790/consumer/hello/1</a> 和 <a href="http://localhost:8791/consumer/hello/1，然后查看监控列表，就会看到有两个服务发生请求服务" target="_blank" rel="noopener">http://localhost:8791/consumer/hello/1，然后查看监控列表，就会看到有两个服务发生请求服务</a></p>
+</li>
+</ul>
+<p><img src="/files/imgs/spcloudtrial/chapterThird/turbine.png" alt="turbine"></p>
+<p>如果你能做到上图的效果，恭喜第三章已经全部学习啦 ^_^</p>
+<h1 id="项目示例地址"><a href="#项目示例地址" class="headerlink" title="项目示例地址"></a>项目示例地址</h1><p><a href="https://github.com/lenvonsam/spring-cloud-training/tree/master/chapter-third" target="_blank" rel="noopener">https://github.com/lenvonsam/spring-cloud-training/tree/master/chapter-third</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SpringCloud/" rel="tag"># SpringCloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/18/spring-cloud-trial-chapter-sec/" rel="next" title="SpringCloud【Greenwich版本】第二章 服务消费者和提供者(Feign)">
+                <i class="fa fa-chevron-left"></i> SpringCloud【Greenwich版本】第二章 服务消费者和提供者(Feign)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/25/spring-cloud-trial-chapter-fourth/" rel="prev" title="SpringCloud【Greenwich版本】第四章路由网关(zuul)和链路追踪(Sleuth)">
+                SpringCloud【Greenwich版本】第四章路由网关(zuul)和链路追踪(Sleuth) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">samy</p>
+              <div class="site-description motion-element" itemprop="description">全栈攻城狮开发过程中的一些技术积累</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/lenvonsam" title="GitHub &rarr; https://github.com/lenvonsam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yanjuncr@sina.com" title="E-Mail &rarr; mailto:yanjuncr@sina.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#雪崩效应"><span class="nav-number">2.</span> <span class="nav-text">雪崩效应</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#熔断器"><span class="nav-number">3.</span> <span class="nav-text">熔断器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hystrix特性"><span class="nav-number">4.</span> <span class="nav-text">Hystrix特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#断路器机制"><span class="nav-number">4.1.</span> <span class="nav-text">断路器机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fallback"><span class="nav-number">4.2.</span> <span class="nav-text">Fallback</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源隔离"><span class="nav-number">4.3.</span> <span class="nav-text">资源隔离</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加Hystrix"><span class="nav-number">5.</span> <span class="nav-text">添加Hystrix</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">5.1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新增熔断机制"><span class="nav-number">5.2.</span> <span class="nav-text">新增熔断机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加pom依赖"><span class="nav-number">5.2.1.</span> <span class="nav-text">添加pom依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加注解"><span class="nav-number">5.2.2.</span> <span class="nav-text">添加注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现UserHytrix类"><span class="nav-number">5.2.3.</span> <span class="nav-text">实现UserHytrix类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启Hystrix开关"><span class="nav-number">5.2.4.</span> <span class="nav-text">开启Hystrix开关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试效果"><span class="nav-number">5.3.</span> <span class="nav-text">测试效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加Hystrix-Dashboard"><span class="nav-number">6.</span> <span class="nav-text">添加Hystrix Dashboard</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加pom依赖-1"><span class="nav-number">6.1.</span> <span class="nav-text">添加pom依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加注解-1"><span class="nav-number">6.2.</span> <span class="nav-text">添加注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动服务"><span class="nav-number">6.3.</span> <span class="nav-text">启动服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加Hystrix-Turbine"><span class="nav-number">7.</span> <span class="nav-text">添加Hystrix Turbine</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备-1"><span class="nav-number">7.1.</span> <span class="nav-text">前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新建Hystrix-Turbine-工程"><span class="nav-number">7.2.</span> <span class="nav-text">新建Hystrix Turbine 工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加注解-2"><span class="nav-number">7.3.</span> <span class="nav-text">添加注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加配置"><span class="nav-number">7.4.</span> <span class="nav-text">添加配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动项目"><span class="nav-number">7.5.</span> <span class="nav-text">启动项目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目示例地址"><span class="nav-number">8.</span> <span class="nav-text">项目示例地址</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">samy</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'fa76VJk4uvfx06zo6InWF1CQ-gzGzoHsz',
+    appKey: 'ThnDjgn7cq0EdEMO6FtKfVwL',
+    placeholder: '不足之处，欢迎指正',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

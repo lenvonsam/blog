@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo.ico?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="一、序言 随着国内大大小小企业数智化转型不断深入，最大程度地满足业务需求，最佳手段是靠数据决策、智能流程来完成。伴随着 GPT5 横空问世，已是企业长久可持续发展的必然趋势。  大量数据信息有哪些渠道呢？除了人工录入，公司内部信息系统的数据资产以外，竞品网站、互补互联网的开放资源其实也是宝贵的数据资产，一定程度在数据决策分析上起着关键作用。  因此，为了满足公司运营部需求 —— 要求技术部门利用合">
+<meta name="keywords" content="Python,Scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python爬虫框架选型-Scrapy">
+<meta property="og:url" content="https://lenvonsam.github.io/2023/04/24/python-spider-scrapy/index.html">
+<meta property="og:site_name" content="山姆博客">
+<meta property="og:description" content="一、序言 随着国内大大小小企业数智化转型不断深入，最大程度地满足业务需求，最佳手段是靠数据决策、智能流程来完成。伴随着 GPT5 横空问世，已是企业长久可持续发展的必然趋势。  大量数据信息有哪些渠道呢？除了人工录入，公司内部信息系统的数据资产以外，竞品网站、互补互联网的开放资源其实也是宝贵的数据资产，一定程度在数据决策分析上起着关键作用。  因此，为了满足公司运营部需求 —— 要求技术部门利用合">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spider/scrapyd_1.png">
+<meta property="og:image" content="https://lenvonsam.github.io/files/imgs/spider/scrapyd_2.png">
+<meta property="og:updated_time" content="2023-04-27T08:16:42.724Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python爬虫框架选型-Scrapy">
+<meta name="twitter:description" content="一、序言 随着国内大大小小企业数智化转型不断深入，最大程度地满足业务需求，最佳手段是靠数据决策、智能流程来完成。伴随着 GPT5 横空问世，已是企业长久可持续发展的必然趋势。  大量数据信息有哪些渠道呢？除了人工录入，公司内部信息系统的数据资产以外，竞品网站、互补互联网的开放资源其实也是宝贵的数据资产，一定程度在数据决策分析上起着关键作用。  因此，为了满足公司运营部需求 —— 要求技术部门利用合">
+<meta name="twitter:image" content="https://lenvonsam.github.io/files/imgs/spider/scrapyd_1.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://lenvonsam.github.io/2023/04/24/python-spider-scrapy/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Python爬虫框架选型-Scrapy | 山姆博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">山姆博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">BLOG OF SAM GEEK</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">6</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">15</span></a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/lenvonsam" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lenvonsam.github.io/2023/04/24/python-spider-scrapy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="samy">
+      <meta itemprop="description" content="全栈攻城狮开发过程中的一些技术积累">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="山姆博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Python爬虫框架选型-Scrapy
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2023-04-24 14:34:04" itemprop="dateCreated datePublished" datetime="2023-04-24T14:34:04+08:00">2023-04-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2023-04-27 16:16:42" itemprop="dateModified" datetime="2023-04-27T16:16:42+08:00">2023-04-27</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2023/04/24/python-spider-scrapy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2023/04/24/python-spider-scrapy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2023/04/24/python-spider-scrapy/" class="leancloud_visitors" data-flag-title="Python爬虫框架选型-Scrapy">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、序言"><a href="#一、序言" class="headerlink" title="一、序言"></a>一、序言</h1><ul>
+<li><p>随着国内大大小小企业数智化转型不断深入，最大程度地满足业务需求，最佳手段是靠数据决策、智能流程来完成。伴随着 GPT5 横空问世，已是企业长久可持续发展的必然趋势。</p>
+</li>
+<li><p>大量数据信息有哪些渠道呢？除了人工录入，公司内部信息系统的数据资产以外，竞品网站、互补互联网的开放资源其实也是宝贵的数据资产，一定程度在数据决策分析上起着关键作用。</p>
+</li>
+<li><p>因此，为了满足公司运营部需求 —— 要求技术部门利用合理手段抓取市场运营数据来支撑数据决策。</p>
+</li>
+</ul>
+<h1 id="二、选型"><a href="#二、选型" class="headerlink" title="二、选型"></a>二、选型</h1><p>基于上述背景，本章节主要向大家介绍下,选择框架的大致思路步骤，希望能给大家一些启示。</p>
+<h2 id="2-1-编程语言"><a href="#2-1-编程语言" class="headerlink" title="2.1 编程语言"></a>2.1 编程语言</h2><p>选型第一步，需要明确目标，高效抓取并处理数据。基于这个目标，我首先考虑是 python，因为是解释型语言（所见即所得），不管是开发还是调试效率都比较高；其次，python 有较多免费开源类库，针对大数据量处理与清洗有天然优势；最后，python 有较多的爬虫框架，在这方面有绝对优势。因此，编程语言最终选择的是 python。</p>
+<h2 id="2-2-选择框架"><a href="#2-2-选择框架" class="headerlink" title="2.2 选择框架"></a>2.2 选择框架</h2><p>python 爬虫框架有很多，例如 Beautiful Soup，PySpider，Scrapy 等等，那基于什么标准来选框架呢？</p>
+<p>对于我来说，第一步是要明确抓什么样的数据，是纯页面，还是纯接口的，还是页面加接口等，最后了解下来，需要满足多种场景。基于要满足各种场景数据抓取的需求，比对了常用框架 PySpider 和 Scrapy，发现 Srapy 更符合要。Scrapy 是一个“一个比较灵活的，可配置的爬虫”，每个环节都可以高度定制，<br>比较适用公司级别的数据抓取，而且对应的社区比较活跃，点赞量超过 47K，fork 量超过 10k，这说明这个框架受到了全球开发者的喜爱，对于日后出现任何框架上的问题都有了很好的保障。</p>
+<p>第二步，我会去尝试使用上述的框架，去了解框架设计的理念和框架的实用性。基本的入门在这里就不过多赘述了，大家感兴趣可以自行查看下方链接学习。</p>
+<p><a href="https://blog.csdn.net/galen2016/article/details/123132204?spm=1001.2014.3001.5501" target="_blank" rel="noopener">–&gt; scrapy 入门教程</a></p>
+<p>从理念上来讲 scrapy 追求的是灵活、简单。灵活体现在每一步的配置包括访问或拦截的每个请求都可以按照开发者的意愿去调整优化，其次一些辅助或互补的功能模块也是以插件的形式结合的，解耦做得比较好；而简单体现在框架整体流程比较清晰明确，流程中每个节点原子性做得比较好，各司其职，方便后期快速排查问题，定位问题，其次，针对简单页面抓取值，开发者只需要简单配置下就能完成，让开发者更关注于业务非底层实现。</p>
+<p>结合上述两步的验证与考量，最终自己选择了 Scrapy。</p>
+<h1 id="三、关联生态"><a href="#三、关联生态" class="headerlink" title="三、关联生态"></a>三、关联生态</h1><h2 id="3-1-Scrapyd"><a href="#3-1-Scrapyd" class="headerlink" title="3.1 Scrapyd"></a>3.1 Scrapyd</h2><p>使用过 Scrapy 的童鞋都清楚，基于开发者本地开发调试使用 scrapy 命令操作就可以完成。但如果要基于服务来的话，就需要用 Scrapyd 服务来操作。Scrapyd 主要解决了<strong>可视化与服务端</strong>的问题，主要提供了 Job，Logs 可视化。</p>
+<p><img src="/files/imgs/spider/scrapyd_1.png" alt="scrapy_1"></p>
+<p>具体 Scrapyd 安装与操作希望大家自行翻阅资料，下面就 Scrapyd 常用的命令罗列下：</p>
+<table>
+<thead>
+<tr>
+<th>常用名命令</th>
+<th>执行命令</th>
+<th>命令描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scrapyd</td>
+<td>scrapyd</td>
+<td>启动 scrapy 服务</td>
+</tr>
+<tr>
+<td>scrapyd-deploy</td>
+<td>scrapyd-deploy [部署名称] -p [项目名称]</td>
+<td>部署爬虫项目</td>
+</tr>
+<tr>
+<td>scrapyd-deploy egg</td>
+<td>scrapyd-deploy –build-egg output.egg</td>
+<td>生成 egg 文件</td>
+</tr>
+</tbody>
+</table>
+<p>Scrapyd webapi 的常用命令：</p>
+<ul>
+<li>curl <a href="http://localhost:6800/listprojects.json" target="_blank" rel="noopener">http://localhost:6800/listprojects.json</a> （列出项目）</li>
+<li>curl <a href="http://localhost:6800/listspiders.json?project=myspider" target="_blank" rel="noopener">http://localhost:6800/listspiders.json?project=myspider</a> （列出爬虫）</li>
+<li>curl <a href="http://localhost:6800/listjobs.json?project=myspider" target="_blank" rel="noopener">http://localhost:6800/listjobs.json?project=myspider</a> （列出 job）</li>
+<li>curl <a href="http://localhost:6800/cancel.json" target="_blank" rel="noopener">http://localhost:6800/cancel.json</a> -d project=myspider -d job=tencent （终止爬虫，该功能会有延时或不能终止爬虫的情况，此时可用 kill -9 杀进程的方式中止）</li>
+</ul>
+<h2 id="3-2-SpiderKeeper"><a href="#3-2-SpiderKeeper" class="headerlink" title="3.2 SpiderKeeper"></a>3.2 SpiderKeeper</h2><p>根据以往项目经验，SpiderKeeper 也是 Scrapy 的关联生态。SpiderKeeper 主要功能是给 Scrapy 插上<strong>定时任务功能</strong>的翅膀，但 SpiderKeeper 依附于 Scrapyd 服务，从其启动的命令就能看出来:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$root</span> spiderkeeper --server=http://127.0.0.1:6800</span><br></pre></td></tr></table></figure>
+<p><img src="/files/imgs/spider/scrapyd_2.png" alt="scrapy_2"></p>
+<h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1><p>最后花一分钟时间跟大家总结下，任何技术选型的前提是理清楚业务需求目标，有了目标才能去选择技术框架，然后对比框架要从理念、性能、可维护、可拓展、关联生态的维度去考量，同时结合项目经验，<strong>相信选出的框架肯定不会差，要相信自己是最棒的！</strong></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/Scrapy/" rel="tag"># Scrapy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/09/26/k8s-coredns/" rel="next" title="手动下载Coredns">
+                <i class="fa fa-chevron-left"></i> 手动下载Coredns
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">samy</p>
+              <div class="site-description motion-element" itemprop="description">全栈攻城狮开发过程中的一些技术积累</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/lenvonsam" title="GitHub &rarr; https://github.com/lenvonsam" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yanjuncr@sina.com" title="E-Mail &rarr; mailto:yanjuncr@sina.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、序言"><span class="nav-number">1.</span> <span class="nav-text">一、序言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、选型"><span class="nav-number">2.</span> <span class="nav-text">二、选型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-编程语言"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 编程语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-选择框架"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 选择框架</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、关联生态"><span class="nav-number">3.</span> <span class="nav-text">三、关联生态</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-Scrapyd"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Scrapyd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-SpiderKeeper"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 SpiderKeeper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">samy</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'fa76VJk4uvfx06zo6InWF1CQ-gzGzoHsz',
+    appKey: 'ThnDjgn7cq0EdEMO6FtKfVwL',
+    placeholder: '不足之处，欢迎指正',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: 'zh-cn' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
